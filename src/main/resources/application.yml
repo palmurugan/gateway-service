@@ -1,0 +1,14 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: gateway-service
+
+services:
+  service-map:   # <-- notice the kebab-case matches camelCase `serviceMap`
+    user-service:
+      url: http://localhost:7071
+      filters:
+        - StripPrefix=1
+      headers:
+        X-Service-Name: user-service
