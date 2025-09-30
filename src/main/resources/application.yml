@@ -3,12 +3,24 @@ server:
 spring:
   application:
     name: gateway-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/smartmart
+          jwk-set-uri: http://localhost:8080/realms/smartmart/protocol/openid-connect/certs
 
 services:
-  service-map:   # <-- notice the kebab-case matches camelCase `serviceMap`
+  service-map:
     user-service:
       url: http://localhost:7071
       filters:
         - StripPrefix=1
       headers:
         X-Service-Name: user-service
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.web.reactive.function.client: DEBUG
